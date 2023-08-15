@@ -15,3 +15,7 @@ def generate_short_url(length=6):
     chars = string.ascii_letters + string.digits
     short_url = "".join([random.choice(chars) for x in range(length)])
     return short_url
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
