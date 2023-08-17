@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import string
 import random
+from datetime import datetime
 
 #https://flask.palletsprojects.com/en/2.3.x/
 app = Flask(__name__)
@@ -10,31 +11,53 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 
 class Links(db.Model):
+    #if you add any additional columns here, you need to re-run the database
+    """
+    from shortener import app, db
+    app.app_context().push()
+    db.create_all()
+    """
+    #watch out when recreating db when data already exists there
     id = db.Column(db.Integer, primary_key=True)
     long_url = db.Column(db.String(500), nullable=False)
-    generated_url_end = db.Column(db.String(6), nullable=False)
-    short_url = db.Column(db.String(50), nullable=False)
+    short_url = db.Column(db.String(6), nullable=False)
+    full_short_url = db.Column(db.String(50), nullable=False)
+    create_date = db.Column(db.DateTime, default=datetime.now())
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.short_url = ''
 
     def __repr__(self):
         return f"Long link: {self.long_url}, short link: {self.short_url}"
+
+    def generate_short_url(length=6):
+        chars = string.ascii_letters + string.digits
+        short_url = "".join([random.choice(chars) for x in range(length)])
+        return short_url
 
 
 @app.route("/", methods= ['GET', 'POST'])
 def mainpage():
     if request.method == 'POST':
+        #read long URL posted by client
         long_url = request.form['long_url']
-        short_url = f"{request.url_root}{generate_short_url()}"
+        #create Links object to be added to db
+        link = Links(long_url=long_url, create_date=datetime.now())
+        #generate short_url
+        short_url = Links.generate_short_url()
+        link.short_url = short_url
+        #full short URL to be shown to client
+        full_short_url = f"{request.url_root}{link.short_url}"
+        link.full_short_url = full_short_url
+        #add data to database
+        db.session.add(link)
+        db.session.commit()
+        #return visual information on site
         return f"""
         Long URL: {long_url}\n
-        Shortened URL: {short_url}"""
+        Shortened URL: {full_short_url}"""
     return render_template('mainpage.html')
-
-
-def generate_short_url(length=6):
-    chars = string.ascii_letters + string.digits
-    short_url = "".join([random.choice(chars) for x in range(length)])
-    return short_url
-
 
 if __name__ == '__main__':
     app.run(debug=True)
