@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import string
 import random
@@ -11,7 +11,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 
 class Links(db.Model):
-    #if you add any additional columns here, you need to re-run the database
+    #if you add any additional columns here, you need to re-run the database or find a way to add wanted columns
+    #commands to create new database
     """
     from shortener import app, db
     app.app_context().push()
@@ -26,27 +27,24 @@ class Links(db.Model):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.short_url = ''
+        self.short_url = self.generate_short_url()
 
     def __repr__(self):
         return f"Long link: {self.long_url}, short link: {self.short_url}"
 
-    def generate_short_url(length=6):
+    def generate_short_url(self, length=6):
         chars = string.ascii_letters + string.digits
-        short_url = "".join([random.choice(chars) for x in range(length)])
-        return short_url
+        self.short_url = "".join([random.choice(chars) for x in range(length)])
+        return self.short_url
 
 
-@app.route("/", methods= ['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def mainpage():
     if request.method == 'POST':
         #read long URL posted by client
         long_url = request.form['long_url']
         #create Links object to be added to db
         link = Links(long_url=long_url, create_date=datetime.now())
-        #generate short_url
-        short_url = Links.generate_short_url()
-        link.short_url = short_url
         #full short URL to be shown to client
         full_short_url = f"{request.url_root}{link.short_url}"
         link.full_short_url = full_short_url
@@ -58,6 +56,11 @@ def mainpage():
         Long URL: {long_url}\n
         Shortened URL: {full_short_url}"""
     return render_template('mainpage.html')
+
+@app.route('/<short_url>')
+def redirect_to_long_url(short_url):
+    link = Links.query.filter_by(short_url=short_url).first()
+    return redirect(link.long_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
