@@ -52,8 +52,7 @@ def mainpage():
         db.session.add(link)
         db.session.commit()
         #return visual information on site
-        return f"""
-        Here's your shortened URL: {full_short_url}"""
+        return render_template('result.html', short_url=link.full_short_url)
     return render_template('mainpage.html')
 
 @app.route('/<short_url>')
