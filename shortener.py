@@ -53,13 +53,12 @@ def mainpage():
         db.session.commit()
         #return visual information on site
         return f"""
-        Long URL: {long_url}\n
-        Shortened URL: {full_short_url}"""
+        Here's your shortened URL: {full_short_url}"""
     return render_template('mainpage.html')
 
 @app.route('/<short_url>')
 def redirect_to_long_url(short_url):
-    link = Links.query.filter_by(short_url=short_url).first()
+    link = Links.query.filter_by(short_url=short_url).first_or_404()
     return redirect(link.long_url)
 
 if __name__ == '__main__':
