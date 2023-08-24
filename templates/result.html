@@ -5,5 +5,26 @@
 </head>
 <body>
     <p>Here's your short URL: <a href="{{ short_url }}">{{ short_url }}</a></p>
+    <button id="copyButton">Copy to Clipboard</button>
+
+
+    <!--  copy to clipboard  -->
+    <script>
+        var copyButton = document.getElementById("copyButton");
+        copyButton.addEventListener("click", function () {
+            copyToClipboard("{{ short_url }}");
+            alert("Copied to clipboard!");
+        });
+
+        function copyToClipboard(text) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+    </script>
+
 </body>
 </html>
