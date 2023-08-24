@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 
 #https://flask.palletsprojects.com/en/2.3.x/
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
