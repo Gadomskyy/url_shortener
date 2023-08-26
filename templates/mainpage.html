@@ -8,7 +8,7 @@
     <div class="container">
         <h1 class="title-header">URL Shortener</h1>
     </div>
-    <form class="custom-form" action="{{ url_for('mainpage') }}" method="post">
+    <form class="custom-form-background" action="{{ url_for('mainpage') }}" method="post">
         <label for="original_url">Enter URL:</label>
         <input type="url" name="long_url" placeholder="https://example.com" required>
         <button type ='submit' class="button" role="button">Shorten</button>

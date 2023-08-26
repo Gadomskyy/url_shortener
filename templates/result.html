@@ -8,13 +8,15 @@
     <div class="container">
         <h1 class="success-header">Success!</h1>
     </div>
-    <div class="container">
-        <p>Your short URL is <a href="{{ short_url }}">{{ short_url }}</a></p>
-    </div>
-    <div class="clipboard-button-container">
-        <button id="copyButton" class="button" role="button">Copy to Clipboard</button>
-        <p> OR </p>
-        <button class="button" role="button" id="shortenAnother" href="/">Shorten Another</button>
+    <div class="custom-form-background">
+        <div class="container">
+            <p>Your short URL is <a href="{{ short_url }}">{{ short_url }}</a></p>
+        </div>
+        <div class="clipboard-button-container">
+            <button id="copyButton" class="button" role="button">Copy to Clipboard</button>
+            <p> OR </p>
+            <button id="shortenAnother" class="button" role="button">Shorten Another</button>
+        </div>
     </div>
 
     <!--  copy to clipboard  -->
@@ -33,6 +35,10 @@
             document.execCommand("copy");
             document.body.removeChild(dummy);
         }
+
+    document.getElementById("shortenAnother").addEventListener("click", function() {
+      window.location.href = "/";
+    });
     </script>
 
 </body>

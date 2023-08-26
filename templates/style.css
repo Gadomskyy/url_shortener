@@ -24,7 +24,7 @@ body {
     0px 0px 20px #ffffff;
 }
 
-.custom-form {
+.custom-form-background {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -34,7 +34,7 @@ body {
   margin: 0 auto;
 }
 
-.custom-form input[type="url"] {
+.custom-form-background input[type="url"] {
   width: 212px; /* Set the width of the input field */
 }
 
