@@ -1,4 +1,9 @@
 /* CSS */
+body {
+  background-image: url('images/background.jpg');
+  background-size: cover;
+}
+
 .button {
   align-items: center;
   background-color: #0A66C2;
