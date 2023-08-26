@@ -4,6 +4,28 @@ body {
   background-size: cover;
 }
 
+.container {
+  text-align: center;
+}
+
+.title-header {
+  font-size: 48px;
+  font-weight: 400;
+  color: #000000;
+  text-shadow: 0px 0px 5px #ffffff, 0px 0px 10px #ffffff, 0px 0px 10px #ffffff,
+    0px 0px 20px #ffffff;
+}
+
+.custom-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Example box shadow */
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .button {
   align-items: center;
   background-color: #0A66C2;
