@@ -98,3 +98,18 @@ body {
   background: rgba(0, 0, 0, .08);
   color: rgba(0, 0, 0, .3);
 }
+
+.result-url-wrapper {
+    background-color: #fff;
+    border: 1px solid #babcbf;
+    border-radius: 5px;
+    bottom: 0;
+    height: 2.625em;
+    min-width: 100%;
+    right: 0;
+    text-align: right;
+    transition: inherit;
+    white-space: nowrap
+    box-sizing: border-box;
+    padding: 12px;
+}
