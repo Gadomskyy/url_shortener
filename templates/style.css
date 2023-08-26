@@ -26,6 +26,10 @@ body {
   margin: 0 auto;
 }
 
+.custom-form input[type="url"] {
+  width: 212px; /* Set the width of the input field */
+}
+
 .button {
   align-items: center;
   background-color: #0A66C2;
