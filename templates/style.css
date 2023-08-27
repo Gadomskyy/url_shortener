@@ -35,7 +35,7 @@ body {
 }
 
 .custom-form-background input[type="url"] {
-  width: 212px; /* Set the width of the input field */
+  width: 210px; /* Set the width of the input field */
 }
 
 .clipboard-button-container {
