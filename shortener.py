@@ -35,6 +35,8 @@ class Links(db.Model):
     def generate_short_url(self, length=6):
         chars = string.ascii_letters + string.digits
         self.short_url = "".join([random.choice(chars) for x in range(length)])
+        while Links.query.filter_by(short_url=self.short_url).first():
+            self.generate_short_url()
         return self.short_url
 
 
