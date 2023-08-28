@@ -8,6 +8,12 @@
     <div class="container">
         <h1 class="success-header">Success!</h1>
     </div>
+    <div class="gif-container">
+        <div class="gif-wrapper">
+            <img class="gif" src="{{ url_for('static',filename='images/success_gif.gif') }}" alt="success-confirm-gif">
+        </div>
+    </div>
+    <br>
     <div class="custom-form-background">
         <div class="container">
             <p>Your short URL is <br><br><a class="result-url-wrapper" target="_blank" href="{{ short_url }}">{{ short_url }}</a></p>
