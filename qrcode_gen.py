@@ -19,9 +19,5 @@ class Qrcode_gen():
         qr.add_data(self.text)
         self.img = qr.make_image(fill_color="black", back_color="white")
 
-    def save_img(self):
-        self.img.save('sample.png')
-
-qr = Qrcode_gen('https://www.youtube.com/')
-qr.qr_code_generation()
-qr.save_img()
+    def save_img(self, img_path='sample.png'):
+        self.img.save(img_path)

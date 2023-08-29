@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_file
 from flask_sqlalchemy import SQLAlchemy
 import string
 import random
 from datetime import datetime
+from qrcode_gen import Qrcode_gen
 
 #https://flask.palletsprojects.com/en/2.3.x/
 app = Flask(__name__, static_folder='./templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.secret_key = "DJge7xTK2VRY4w6vu1cIAFJxoNYkXK8L"
 
 db = SQLAlchemy(app)
 
@@ -44,6 +46,7 @@ class Links(db.Model):
 def mainpage():
     if request.method == 'POST':
         action = request.form.get('action')
+
         #generate short_url
         if action == 'generate_url':
             #read long URL posted by client
@@ -56,6 +59,7 @@ def mainpage():
             #add data to database
             db.session.add(link)
             db.session.commit()
+            # Store the link in session
             #return visual information on site
             return render_template('result.html', short_url=link.full_short_url)
     return render_template('mainpage.html')
