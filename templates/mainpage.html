@@ -11,7 +11,7 @@
     <form class="custom-form-background" action="{{ url_for('mainpage') }}" method="post">
         <label for="original_url">Enter URL:</label>
         <input type="url" name="long_url"  autocomplete="off" placeholder="https://example.com" required>
-        <button type ='submit' class="button" role="button">Shorten</button>
+        <button name="action" type ='submit' class="button" role="button" value="generate_url">Shorten</button>
 
     </form>
     <footer class="footer">

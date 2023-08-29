@@ -43,18 +43,21 @@ class Links(db.Model):
 @app.route("/", methods=['GET', 'POST'])
 def mainpage():
     if request.method == 'POST':
-        #read long URL posted by client
-        long_url = request.form['long_url']
-        #create Links object to be added to db
-        link = Links(long_url=long_url, create_date=datetime.now())
-        #full short URL to be shown to client
-        full_short_url = f"{request.url_root}{link.short_url}"
-        link.full_short_url = full_short_url
-        #add data to database
-        db.session.add(link)
-        db.session.commit()
-        #return visual information on site
-        return render_template('result.html', short_url=link.full_short_url)
+        action = request.form.get('action')
+        #generate short_url
+        if action == 'generate_url':
+            #read long URL posted by client
+            long_url = request.form['long_url']
+            #create Links object to be added to db
+            link = Links(long_url=long_url, create_date=datetime.now())
+            #full short URL to be shown to client
+            full_short_url = f"{request.url_root}{link.short_url}"
+            link.full_short_url = full_short_url
+            #add data to database
+            db.session.add(link)
+            db.session.commit()
+            #return visual information on site
+            return render_template('result.html', short_url=link.full_short_url)
     return render_template('mainpage.html')
 
 @app.route('/<short_url>')
