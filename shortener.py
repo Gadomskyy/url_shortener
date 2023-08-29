@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import string
 import random
@@ -69,8 +69,6 @@ def mainpage():
             qr_img_base64 = base64.b64encode(qr_img_stream.getvalue()).decode('utf-8')
             return render_template('result.html', short_url=link.full_short_url, qr_img_base64=qr_img_base64)
 
-            #return visual information on site
-            # return render_template('result.html', short_url=link.full_short_url)
     return render_template('mainpage.html')
 
 @app.route('/<short_url>')
