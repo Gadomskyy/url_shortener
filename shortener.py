@@ -4,6 +4,8 @@ import string
 import random
 from datetime import datetime
 from qrcode_gen import Qrcode_gen
+from io import BytesIO
+import base64
 
 #https://flask.palletsprojects.com/en/2.3.x/
 app = Flask(__name__, static_folder='./templates')
@@ -59,9 +61,16 @@ def mainpage():
             #add data to database
             db.session.add(link)
             db.session.commit()
-            # Store the link in session
+
+            #generate QR Code for shortened url
+            qr = Qrcode_gen(link.full_short_url)
+            qr_img_stream = BytesIO()
+            qr.qr_code_generation(qr_img_stream)
+            qr_img_base64 = base64.b64encode(qr_img_stream.getvalue()).decode('utf-8')
+            return render_template('result.html', short_url=link.full_short_url, qr_img_base64=qr_img_base64)
+
             #return visual information on site
-            return render_template('result.html', short_url=link.full_short_url)
+            # return render_template('result.html', short_url=link.full_short_url)
     return render_template('mainpage.html')
 
 @app.route('/<short_url>')

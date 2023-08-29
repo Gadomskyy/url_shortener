@@ -8,7 +8,7 @@ class Qrcode_gen():
         self.text = text
         self.img = None
 
-    def qr_code_generation(self):
+    def qr_code_generation(self, img_stream):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -17,7 +17,5 @@ class Qrcode_gen():
         )
 
         qr.add_data(self.text)
-        self.img = qr.make_image(fill_color="black", back_color="white")
+        self.img = qr.make_image(fill_color="black", back_color="white").save(img_stream, format="PNG")
 
-    def save_img(self, img_path='sample.png'):
-        self.img.save(img_path)
