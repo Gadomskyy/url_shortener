@@ -31,6 +31,10 @@
             <img src="data:image/png;base64,{{ qr_img_base64 }}" alt="QR Code">
         </div>
     </div>
+    <br>
+    <div class="clipboard-button-container">
+        <button id="downloadbutton" class="button" role="button">Download QR Code</button>
+    </div>
     <footer class="footer">
         <div class = "container">
             ©2023 URL Shortener by Jan Gadomski
@@ -56,6 +60,17 @@
 
     document.getElementById("shortenAnother").addEventListener("click", function() {
       window.location.href = "/";
+    });
+    </script>
+
+    <!--  download QR Code  -->
+    <script>
+        document.getElementById("downloadbutton").addEventListener("click", function() {
+            var qrCodeData = "{{ qr_img_base64 }}";
+            var link = document.createElement('a');
+            link.href = "data:image/png;base64," + qrCodeData;
+            link.download = "qr_code.png";
+            link.click();
     });
     </script>
 
